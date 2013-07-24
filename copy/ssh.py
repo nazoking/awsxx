@@ -4,8 +4,8 @@ u"""%prog NEW_INSTANCE_NAME
   ssh を開く
 """
 
-import lib.command
-import start
+from lib import command
+from . import start
 import fabric.api as fab
 
 
@@ -16,5 +16,10 @@ def main(self, aopt, args):
         fab.open_shell()
     self.out("OK")
 
+
+def options():
+    return start.options()
+
+
 if __name__ == '__main__':
-    main(*lib.command.parse(__doc__, start.options()))
+    main(*command.parse(__doc__, options()))

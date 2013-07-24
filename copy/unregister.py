@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-# vim: fileencoding=utf-8 
+# vim: fileencoding=utf-8
 u"""%prog NEW_INSTANCE_NAME
   (必要なら)インスタンスを終了し、AMIを削除する。
 """
 
-import lib.command
+from lib import command
 
 
 def main(self, aopt, args):
@@ -12,4 +12,4 @@ def main(self, aopt, args):
     self.out("OK")
 
 if __name__ == '__main__':
-    main(*lib.command.parse(__doc__))
+    main(*command.parse(__doc__))

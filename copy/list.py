@@ -4,7 +4,7 @@ u"""%prog
   関連するインスタンス、ボリューム、AMI、スナップショットの一覧
 """
 
-import lib.command
+from lib import command
 
 
 def list(self):
@@ -35,4 +35,4 @@ def main(self, aopt, args):
     list(self)
 
 if __name__ == '__main__':
-    main(*lib.command.parse(__doc__))
+    main(*command.parse(__doc__))

@@ -4,7 +4,7 @@ u"""%prog NEW_INSTANCE_NAME
   インスタンスを停止してボリュームを削除する
 """
 
-import lib.command
+from lib import command
 
 
 def main(self, aopt, args):
@@ -12,4 +12,4 @@ def main(self, aopt, args):
     self.out("OK")
 
 if __name__ == '__main__':
-    main(*lib.command.parse(__doc__))
+    main(*command.parse(__doc__))
