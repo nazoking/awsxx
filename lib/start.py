@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # vim: fileencoding=utf-8
-u"""Usage: %prog NEW_INSTANCE_NAME
-  インスタンスをコピーして実行します。"""
+u"""%prog NEW_INSTANCE_NAME
+  インスタンスをコピーして立ち上げる"""
 
-import lib.command
 from optparse import make_option
 import sys
 
@@ -38,6 +37,3 @@ def main(self, aopt, args):
                      instance_options=aopt['instance_options'])
     self.out("OK")
     return ins
-
-if __name__ == '__main__':
-    main(*lib.command.parse(__doc__, options()))

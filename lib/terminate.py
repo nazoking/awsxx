@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-# vim: fileencoding=utf-8 
-u"""Usage: %prog NEW_INSTANCE_NAME
-    インスタンスを終了する
+# vim: fileencoding=utf-8
+u"""%prog NEW_INSTANCE_NAME
+  インスタンスを停止してボリュームを削除する
 """
 
 import lib.command

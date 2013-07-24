@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-# vim: fileencoding=utf-8 
-u"""
-Usage: %prog
-    一覧
+# vim: fileencoding=utf-8
+u"""%prog
+  関連するインスタンス、ボリューム、AMI、スナップショットの一覧
 """
 
 import lib.command

@@ -5,6 +5,9 @@ import os
 import getpass
 from optparse import OptionParser
 import yaml
+import sys
+
+module_prefix = 'lib.'
 
 
 def create(env=os.environ):
@@ -24,8 +27,8 @@ def list_get(self, index):
         return None
 
 
-def parse(usage, options=[], env=os.environ):
-    parser = OptionParser(usage=usage)
+def parse(usage, options=[], env=os.environ, args=sys.argv, prog=None):
+    parser = OptionParser(usage=usage, prog=prog)
     for opt in options:
         parser.add_option(opt)
     parser.add_option('-c', '--config', dest='config',
@@ -33,7 +36,7 @@ def parse(usage, options=[], env=os.environ):
     parser.add_option("-v", "--verbose",
                       action="store_true", dest="verbose")
 
-    (options, args) = parser.parse_args()
+    (options, args) = parser.parse_args(args)
 
     dic = {
         'ssh_settings': {},
@@ -50,3 +53,39 @@ def parse(usage, options=[], env=os.environ):
             dic[k] = v
 
     return (create(), dic, args)
+
+
+def is_command(module):
+    names = dir(module)
+    if 'main' in names and '__doc__' in names:
+        return True
+    else:
+        return False
+
+
+def execute(args=sys.argv[1:], prefix=module_prefix, prog=sys.argv[0]):
+    cmd = None
+    nargs = []
+    for arg in args:
+        if cmd is None and not(arg[0].startswith('-')):
+            cmd = arg
+        else:
+            nargs.append(arg)
+
+    if cmd is None:
+        import lib.help
+        lib.help.command_help(prog, prefix)
+        sys.exit(-1)
+
+    module_name = prefix+cmd
+    try:
+        module = getattr(__import__(module_name, globals(), locals()), cmd)
+    except ImportError:
+        module = None
+    if module and not is_command(module):
+        raise Exception("Unknown command "+cmd)
+    options = module.options() if 'options' in dir(module) else []
+    module.main(*parse(module.__doc__,
+                       options=options,
+                       args=nargs,
+                       prog=prog+" "+cmd))
