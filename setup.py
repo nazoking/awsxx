@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(name='awsxx',
       description='AWS High-level utilities',
       url='https://github.com/nazoking/awsxx',
-      version='0.0.1',
+      version='0.0.2',
       author='nazoking',
       author_email='nazoking@gmail.com',
       requires=[
@@ -16,6 +16,6 @@ setup(name='awsxx',
           'awsxx.copy'
           ],
       scripts=[
-          'scripts/copy'
+          'scripts/ec2-copy'
           ]
       )

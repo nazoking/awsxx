@@ -1,0 +1,10 @@
+#!/bin/env python
+# vim: fileencoding=utf-8
+
+u"""%prog [SUBCOMMAND]
+  EC2 インスタンスをコピーして立ち上げる一連の動作をする"""
+
+import awsxx.lib.command
+
+if __name__ == '__main__':
+    awsxx.lib.command.execute(prefix='awsxx.copy.')
