@@ -4,7 +4,7 @@ u"""%prog NEW_INSTANCE_NAME
   (必要なら)インスタンスを終了し、AMIを削除する。
 """
 
-from lib import command
+from ..lib import command
 
 
 def main(self, aopt, args):

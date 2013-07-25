@@ -4,7 +4,7 @@ u"""%prog
   関連するインスタンス、ボリューム、AMI、スナップショットの一覧
 """
 
-from lib import command
+from ..lib import command
 
 
 def list(self):

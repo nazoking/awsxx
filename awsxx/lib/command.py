@@ -53,14 +53,20 @@ def parse(usage, options=[], env=os.environ, args=sys.argv, prog=None):
     return (create(), dic, args)
 
 
+def module_import(module_name):
+    module = __import__(module_name)
+    for s in module_name.split(".")[1:]:
+        module = getattr(module, s)
+    return module
+
+
 def command_help(prog, prefix):
     modules = []
     from pydoc import ModuleScanner
 
     def callback(path, module_name, desc):
         if module_name.startswith(prefix):
-            name = module_name[(module_name.rfind(".")+1):]
-            module = getattr(__import__(module_name), name)
+            module = module_import(module_name)
             if is_command(module):
                 modules.append((module_name[len(prefix):], module.__doc__))
 
@@ -95,7 +101,7 @@ def execute(prefix, args=sys.argv[1:], prog=sys.argv[0]):
 
     module_name = prefix+cmd
     try:
-        module = getattr(__import__(module_name, globals(), locals()), cmd)
+        module = module_import(module_name)
     except ImportError, err:
         print "can't import module "+module_name+" "+str(err)
         module = None

@@ -4,7 +4,7 @@ u"""%prog NEW_INSTANCE_NAME
   ssh を開く
 """
 
-from lib import command
+from ..lib import command
 from . import start
 import fabric.api as fab
 

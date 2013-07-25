@@ -4,7 +4,7 @@ u"""%prog NEW_INSTANCE_NAME
   インスタンスを停止してボリュームを削除する
 """
 
-from lib import command
+from ..lib import command
 
 
 def main(self, aopt, args):

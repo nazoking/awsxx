@@ -3,9 +3,9 @@ u"""%prog
   ヘルプの表示
 """
 
-import lib.command
+from ..lib import command
 import sys
 
 
 def main(self, args, options):
-    lib.command.command_help(sys.argv[0], __package__+".")
+    command.command_help(sys.argv[0], __package__+".")
