@@ -215,16 +215,13 @@ class EC2Copy:
                 self.out("instance start **" + ins.id + "**")
 
     def start(self, original_instance_name, new_instance_name, new_ami_name,
-              new_hostname, ssh_settings={}, instance_options={}):
+              instance_options={}):
         u"""インスタンスを起動し、ホスト名を書き換えます。
 
         Args:
           original_instance_name -- ami作成時に元となるインスタンスの名前
-          new_instance_name -- 作成されるインスタンス、amiの名前、ホスト名
+          new_instance_name -- 作成されるインスタンスの名前
           new_ami_name -- 作成されるamiの名前
-          new_hostname -- 新しいインスタンスに設定されるホスト名
-          ssh_settings -- インスタンスにsshでログインするときのオプション
-                          ( fabric.api.settings の引数 )
           instance_options -- インスタンスを起動するときのオプション
                           ( boto.ec2.image.Image.run の引数 )
         Returns:
@@ -255,7 +252,6 @@ class EC2Copy:
         self.out("ready! **" + ins.id + "** STATUS=*" + ins.state + "*")
         self.out("HOST= **" + ins.public_dns_name + "**")
         self.wait_port_open(ins.public_dns_name, 22)
-        self.rename_hostname(ins.public_dns_name, new_hostname, ssh_settings)
         return ins
 
     def terminate_instance(self, name):

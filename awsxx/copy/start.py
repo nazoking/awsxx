@@ -14,9 +14,7 @@ def options():
         make_option("--instance", type="string", dest="new_instance_name",
                     help=u"コピー先のインスタンス名"),
         make_option("--ami", type="string", dest="new_ami_name",
-                    help=u"コピー先のホスト名"),
-        make_option("--hostname", type="string", dest="new_hostname",
-                    help=u"ホスト名"),
+                    help=u"コピー先のami名"),
         ]
 
 
@@ -27,13 +25,10 @@ def main(self, aopt, args):
         sys.exit(-1)
     new_ami_name = opt.new_ami_name or args[0]
     new_instance_name = opt.new_instance_name or args[0]
-    new_hostname = opt.new_hostname or args[0]
 
     ins = self.start(original_instance_name=opt.original_instance_name,
                      new_instance_name=new_instance_name,
                      new_ami_name=new_ami_name,
-                     new_hostname=new_hostname,
-                     ssh_settings=aopt['ssh_settings'],
                      instance_options=aopt['instance_options'])
     self.out("OK")
     return ins
