@@ -254,6 +254,32 @@ class EC2Copy:
         self.wait_port_open(ins.public_dns_name, 22)
         return ins
 
+    def stop_instance(self, name):
+        u"""インスタンスを停止させます。
+
+        同名のインスタンスが複数ある場合は例外を発生させます。
+
+        Args:
+          name -- 停止させるインスタンス名(Nameタグ)
+
+        Returns: 終了させたインスタンスを返します。
+          インスタンスが見つからない場合は None を返します。
+        """
+        inss = [r for r in self.find_instances_by_name(name)
+                if r.state != 'terminated']
+        if not(inss):
+            return None
+        if len(inss) != 1:
+            raise Exception("UnExpected instances found %d" % (len(inss)))
+        ins = inss[0]
+        self.check_taged_me(ins)
+        self.out("find name=%s id=**%s** state=*%s*" %
+                 (name, ins.id, ins.state))
+        ins.stop()
+        ins.update()
+        self.wait_instance_state_changing(ins)
+        return ins
+
     def terminate_instance(self, name):
         u"""インスタンスを終了させます。
 
