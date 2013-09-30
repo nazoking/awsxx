@@ -16,3 +16,29 @@ SUBCOMMAND
   list
     関連するインスタンス、ボリューム、AMI、スナップショットの一覧
 
+# INTALL
+
+pip install https://github.com/nazoking/awsxx/wiki/dist/awsxx-0.0.5.tar.gz
+
+# BUILD & DIST
+
+checkout
+
+```
+git clone git@github.com:nazoking/awsxx.git
+cd awsxx
+git clone git@github.com:nazoking/awsxx.wiki.git wiki
+ln -s `pwd`/wiki dist
+```
+
+
+```
+# dist/awsxx-0.0.x.tar を作る
+python setup.py sdist
+git push
+# wiki を更新
+vim dist/Home.md
+git commit wiki
+git push wiki
+```
+
