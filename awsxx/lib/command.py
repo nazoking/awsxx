@@ -6,6 +6,7 @@ import getpass
 from optparse import OptionParser
 import yaml
 import sys
+import pkg_resources
 
 
 def create(env=os.environ):
@@ -25,8 +26,13 @@ def list_get(self, index):
         return None
 
 
+def version():
+    "バージョン番号を得る"
+    return pkg_resources.require("awsxx")[0].version
+
+
 def parse(usage, options=[], env=os.environ, args=sys.argv, prog=None):
-    parser = OptionParser(usage=usage, prog=prog)
+    parser = OptionParser(usage=usage, prog=prog, version=version())
     for opt in options:
         parser.add_option(opt)
     parser.add_option('-c', '--config', dest='config',
@@ -74,6 +80,7 @@ def command_help(prog, prefix):
         pass
 
     ModuleScanner().run(callback, onerror=onerror)
+    print "Version "+version()
     for name, doc in modules:
         print doc.replace("%prog", prog+" "+name).strip()
 

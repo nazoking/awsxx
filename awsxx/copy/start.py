@@ -19,6 +19,12 @@ def options():
                     help=u"インスタンス立ち上げ時のuser_data(bash)"),
         make_option("--user_data", type="string", dest="user_data",
                     help=u"インスタンス立ち上げ時のuser_data"),
+        make_option("--role", type="string", dest="role",
+                    help=u"インスタンス立ち上げ時のROLE(instance_profile_name)"),
+        make_option("--security-groups", type="string", dest="security_groups",
+                    help=u"インスタンス立ち上げ時のsecurity_groups"),
+        make_option("--tag", type="string", dest="tag", action="append",
+                    help=u"インスタンス立ち上げ時のtag (key=name) 複数回指定可能 "),
         ]
 
 
@@ -34,9 +40,22 @@ def main(self, aopt, args):
         instance_options["user_data"] = "#!/bin/bash -ex\n"+opt.user_script
     else:
         instance_options["user_data"] = opt.user_data
+    if opt.role:
+        instance_options["instance_profile_name"] = opt.role
+    if opt.security_groups:
+        instance_options["security_groups"] = opt.security_groups
+
     ins = self.start(original_instance_name=opt.original_instance_name,
                      new_instance_name=new_instance_name,
                      new_ami_name=new_ami_name,
                      instance_options=instance_options)
+    if opt.tag:
+        for tag in opt.tag:
+            t = tag.split("=", 1)
+            if len(t) == 2:
+                ins.add_tag(t[0], t[1])
+            else:
+                ins.add_tag(tag)
+
     self.out("OK")
     return ins
